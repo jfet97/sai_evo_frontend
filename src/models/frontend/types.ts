@@ -1,5 +1,5 @@
 import { ADT, matchI } from "ts-adt";
-import { constants, MapFromUntaggedConstants } from "ts-consts";
+import { constants, InferUnion, MapFromUntaggedConstants } from "ts-consts";
 
 export enum ExerciseType {
   MULTIPLE_CHOICE_SINGLE_POSSIBLE,
@@ -134,7 +134,7 @@ interface AggregatedExerciseWithTeacherFields
 
 /* ----------------- */
 
-const ExercisesTypesMap = constants("exercises", [
+const ExerciseTypesMap = constants("exercises", [
   "MultipleChoiceRadioExercise",
   "MultipleChoiceRadioExerciseWithSolutions",
   "MultipleChoiceRadioExerciseWithTeacherFields",
@@ -161,87 +161,88 @@ const ExercisesTypesMap = constants("exercises", [
   "AggregatedExerciseWithTeacherFields",
 ]).untagged;
 
-type ExercisesTypesMap = typeof ExercisesTypesMap;
+type ExerciseTypesMap = typeof ExerciseTypesMap;
+type ExerciseTypes = InferUnion<ExerciseTypesMap>
 
 // scomponi e crea unendo teacher soluzioni studenti e studenti no sol
 export type ExerciseTypesForADT = MapFromUntaggedConstants<
-  ExercisesTypesMap,
+  ExerciseTypesMap,
   Record<
-    ExercisesTypesMap["MultipleChoiceRadioExercise"],
+    ExerciseTypesMap["MultipleChoiceRadioExercise"],
     MultipleChoiceRadioExercise
   > &
     Record<
-      ExercisesTypesMap["MultipleChoiceRadioExerciseWithSolutions"],
+      ExerciseTypesMap["MultipleChoiceRadioExerciseWithSolutions"],
       MultipleChoiceRadioExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["MultipleChoiceRadioExerciseWithTeacherFields"],
+      ExerciseTypesMap["MultipleChoiceRadioExerciseWithTeacherFields"],
       MultipleChoiceRadioExerciseWithTeacherFields
     > &
     Record<
-      ExercisesTypesMap["MultipleChoiceCheckboxExercise"],
+      ExerciseTypesMap["MultipleChoiceCheckboxExercise"],
       MultipleChoiceCheckboxExercise
     > &
     Record<
-      ExercisesTypesMap["MultipleChoiceCheckboxExerciseWithSolutions"],
+      ExerciseTypesMap["MultipleChoiceCheckboxExerciseWithSolutions"],
       MultipleChoiceCheckboxExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["MultipleChoiceCheckboxExerciseWithTeacherFields"],
+      ExerciseTypesMap["MultipleChoiceCheckboxExerciseWithTeacherFields"],
       MultipleChoiceCheckboxExerciseWithTeacherFields
     > &
-    Record<ExercisesTypesMap["JSExercise"], JSExercise> &
+    Record<ExerciseTypesMap["JSExercise"], JSExercise> &
     Record<
-      ExercisesTypesMap["JSExerciseWithSolutions"],
+      ExerciseTypesMap["JSExerciseWithSolutions"],
       JSExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["JSExerciseWithTeacherFields"],
+      ExerciseTypesMap["JSExerciseWithTeacherFields"],
       JSExerciseWithTeacherFields
     > &
-    Record<ExercisesTypesMap["CExercise"], CExercise> &
+    Record<ExerciseTypesMap["CExercise"], CExercise> &
     Record<
-      ExercisesTypesMap["CExerciseWithSolutions"],
+      ExerciseTypesMap["CExerciseWithSolutions"],
       CExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["CExerciseWithTeacherFields"],
+      ExerciseTypesMap["CExerciseWithTeacherFields"],
       CExerciseWithTeacherFields
     > &
-    Record<ExercisesTypesMap["OpenAnswerExercise"], OpenAnswerExercise> &
+    Record<ExerciseTypesMap["OpenAnswerExercise"], OpenAnswerExercise> &
     Record<
-      ExercisesTypesMap["OpenAnswerExerciseWithSolutions"],
+      ExerciseTypesMap["OpenAnswerExerciseWithSolutions"],
       OpenAnswerExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["OpenAnswerExerciseWithTeacherFields"],
+      ExerciseTypesMap["OpenAnswerExerciseWithTeacherFields"],
       OpenAnswerExerciseWithTeacherFields
     > &
-    Record<ExercisesTypesMap["AttachmentExercise"], AttachmentExercise> &
+    Record<ExerciseTypesMap["AttachmentExercise"], AttachmentExercise> &
     Record<
-      ExercisesTypesMap["AttachmentExerciseWithSolutions"],
+      ExerciseTypesMap["AttachmentExerciseWithSolutions"],
       AttachmentExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["AttachmentExerciseWithTeacherFields"],
+      ExerciseTypesMap["AttachmentExerciseWithTeacherFields"],
       AttachmentExerciseWithTeacherFields
     > &
-    Record<ExercisesTypesMap["ClozeExercise"], ClozeExercise> &
+    Record<ExerciseTypesMap["ClozeExercise"], ClozeExercise> &
     Record<
-      ExercisesTypesMap["ClozeExerciseWithSolutions"],
+      ExerciseTypesMap["ClozeExerciseWithSolutions"],
       ClozeExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["ClozeExerciseWithTeacherFields"],
+      ExerciseTypesMap["ClozeExerciseWithTeacherFields"],
       ClozeExerciseWithTeacherFields
     > &
-    Record<ExercisesTypesMap["AggregatedExercise"], AggregatedExercise> &
+    Record<ExerciseTypesMap["AggregatedExercise"], AggregatedExercise> &
     Record<
-      ExercisesTypesMap["AggregatedExerciseWithSolutions"],
+      ExerciseTypesMap["AggregatedExerciseWithSolutions"],
       AggregatedExerciseWithSolutions
     > &
     Record<
-      ExercisesTypesMap["AggregatedExerciseWithTeacherFields"],
+      ExerciseTypesMap["AggregatedExerciseWithTeacherFields"],
       AggregatedExerciseWithTeacherFields
     >
 >;
@@ -280,22 +281,22 @@ export function isExerciseWithSolutions(
 ): exercise is ExerciseWithSolutions {
 
   const exerciseWithSolutionsTypes = Utils.checkTupleHasUnionEls<ExerciseWithSolutionsTypes>()([
-    ExercisesTypesMap.MultipleChoiceRadioExerciseWithSolutions,
-    ExercisesTypesMap.MultipleChoiceRadioExerciseWithTeacherFields,
-    ExercisesTypesMap.MultipleChoiceCheckboxExerciseWithSolutions,
-    ExercisesTypesMap.MultipleChoiceCheckboxExerciseWithTeacherFields,
-    ExercisesTypesMap.JSExerciseWithSolutions,
-    ExercisesTypesMap.JSExerciseWithTeacherFields,
-    ExercisesTypesMap.CExerciseWithSolutions,
-    ExercisesTypesMap.CExerciseWithTeacherFields,
-    ExercisesTypesMap.OpenAnswerExerciseWithSolutions,
-    ExercisesTypesMap.OpenAnswerExerciseWithTeacherFields,
-    ExercisesTypesMap.AttachmentExerciseWithSolutions,
-    ExercisesTypesMap.AttachmentExerciseWithTeacherFields,
-    ExercisesTypesMap.ClozeExerciseWithSolutions,
-    ExercisesTypesMap.ClozeExerciseWithTeacherFields,
-    ExercisesTypesMap.AggregatedExerciseWithSolutions,
-    ExercisesTypesMap.AggregatedExerciseWithTeacherFields,
+    ExerciseTypesMap.MultipleChoiceRadioExerciseWithSolutions,
+    ExerciseTypesMap.MultipleChoiceRadioExerciseWithTeacherFields,
+    ExerciseTypesMap.MultipleChoiceCheckboxExerciseWithSolutions,
+    ExerciseTypesMap.MultipleChoiceCheckboxExerciseWithTeacherFields,
+    ExerciseTypesMap.JSExerciseWithSolutions,
+    ExerciseTypesMap.JSExerciseWithTeacherFields,
+    ExerciseTypesMap.CExerciseWithSolutions,
+    ExerciseTypesMap.CExerciseWithTeacherFields,
+    ExerciseTypesMap.OpenAnswerExerciseWithSolutions,
+    ExerciseTypesMap.OpenAnswerExerciseWithTeacherFields,
+    ExerciseTypesMap.AttachmentExerciseWithSolutions,
+    ExerciseTypesMap.AttachmentExerciseWithTeacherFields,
+    ExerciseTypesMap.ClozeExerciseWithSolutions,
+    ExerciseTypesMap.ClozeExerciseWithTeacherFields,
+    ExerciseTypesMap.AggregatedExerciseWithSolutions,
+    ExerciseTypesMap.AggregatedExerciseWithTeacherFields,
   ])   
 
   return (exerciseWithSolutionsTypes as string[]).includes(exercise._type);
