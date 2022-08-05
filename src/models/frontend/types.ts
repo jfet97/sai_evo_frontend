@@ -305,8 +305,7 @@ type TeacherExercises = Extract<
   Exercise,
   {
     _type:
-      | typeof ExercisesTypesMap.AggregatedExerciseWithTeacherFields
-      | typeof ExercisesTypesMap.ClozeExerciseWithTeacherFields;
+      `${any}${"Teacher"}${any}`;
   }
 >;
 
