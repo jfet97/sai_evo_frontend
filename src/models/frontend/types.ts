@@ -163,6 +163,7 @@ const ExercisesTypesMap = constants("exercises", [
 
 type ExercisesTypesMap = typeof ExercisesTypesMap;
 
+// scomponi e crea unendo teacher soluzioni studenti e studenti no sol
 export type ExerciseTypesForADT = MapFromUntaggedConstants<
   ExercisesTypesMap,
   Record<
@@ -250,19 +251,54 @@ export type Exercise = ADT<ExerciseTypesForADT>;
 export type ExerciseWithSolutions = Extract<Exercise, ExerciseSolutionsFields>;
 export type ExerciseWithSolutionsTypes = ExerciseWithSolutions["_type"];
 
+
+namespace Utils {
+
+  type Cast<X, Y> = X extends Y ? X : Y
+
+  // eslint-disable-next-line no-inner-declarations
+  export function checkTupleHasUnionEls<U>() {
+    return <N extends Narrowable, T extends readonly N[] | []>(tuple: TupleHasUnionEls<T, U>) => tuple
+  }
+
+  type Narrowable =
+  | string
+  | number
+  | bigint
+  | boolean
+  | void
+  | null
+  | undefined
+
+
+type TupleHasUnionEls<Tuple extends readonly any[], Union> = Tuple[number] extends Union ? [Union] extends [Tuple[number]] ? Tuple : "missing elements" : "extraneous elements"
+
+}
+
 export function isExerciseWithSolutions(
   exercise: Exercise
 ): exercise is ExerciseWithSolutions {
-  return [
-    ExercisesTypesMap.MultipleChoiceCheckboxExerciseWithSolutions,
+
+  const exerciseWithSolutionsTypes = Utils.checkTupleHasUnionEls<ExerciseWithSolutionsTypes>()([
     ExercisesTypesMap.MultipleChoiceRadioExerciseWithSolutions,
+    ExercisesTypesMap.MultipleChoiceRadioExerciseWithTeacherFields,
+    ExercisesTypesMap.MultipleChoiceCheckboxExerciseWithSolutions,
+    ExercisesTypesMap.MultipleChoiceCheckboxExerciseWithTeacherFields,
     ExercisesTypesMap.JSExerciseWithSolutions,
+    ExercisesTypesMap.JSExerciseWithTeacherFields,
     ExercisesTypesMap.CExerciseWithSolutions,
-    ExercisesTypesMap.AttachmentExerciseWithSolutions,
-    ExercisesTypesMap.AggregatedExerciseWithSolutions,
-    ExercisesTypesMap.ClozeExerciseWithSolutions,
+    ExercisesTypesMap.CExerciseWithTeacherFields,
     ExercisesTypesMap.OpenAnswerExerciseWithSolutions,
-  ].includes(exercise._type);
+    ExercisesTypesMap.OpenAnswerExerciseWithTeacherFields,
+    ExercisesTypesMap.AttachmentExerciseWithSolutions,
+    ExercisesTypesMap.AttachmentExerciseWithTeacherFields,
+    ExercisesTypesMap.ClozeExerciseWithSolutions,
+    ExercisesTypesMap.ClozeExerciseWithTeacherFields,
+    ExercisesTypesMap.AggregatedExerciseWithSolutions,
+    ExercisesTypesMap.AggregatedExerciseWithTeacherFields,
+  ])   
+
+  return (exerciseWithSolutionsTypes as string[]).includes(exercise._type);
 }
 
 type TeacherExercises = Extract<
