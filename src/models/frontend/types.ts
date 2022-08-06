@@ -1,5 +1,5 @@
 import { ADT, matchI } from "ts-adt";
-import { constants, InferUnion, MapFromUntaggedConstants } from "ts-consts";
+import { constants, InferUnion, MapUntaggedConstants } from "ts-consts";
 
 export enum ExerciseType {
   MULTIPLE_CHOICE_SINGLE_POSSIBLE,
@@ -182,7 +182,7 @@ type ExerciseTypesMap = typeof ExerciseTypesMap;
 type ExerciseTypes = InferUnion<ExerciseTypesMap>
 
 
-export type ExerciseTypesForADT = MapFromUntaggedConstants<
+export type ExerciseTypesForADT = MapUntaggedConstants<
   ExerciseTypesMap,
   {
     [ExerciseTypesMap.MultipleChoiceRadioExercise]: MultipleChoiceRadioExercise
