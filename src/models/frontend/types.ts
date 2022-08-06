@@ -12,6 +12,12 @@ export enum ExerciseType {
   C,
 }
 
+// concept
+// interface ProgrammingExercise extends BaseExerciseFields {
+//   _type: "ProgrammingExercise"
+//   language?: { tag: "JS", testcase:  } | { tag: "C", testcase:  } | 
+// }
+
 interface ExerciseSolutionsFields {
   solutions: string[]; // ExerciseSolution[]
 }
