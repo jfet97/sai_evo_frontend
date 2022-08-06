@@ -14,7 +14,7 @@ export enum ExerciseType {
 
 // concept
 // interface ProgrammingExercise extends BaseExerciseFields {
-//   _type: "ProgrammingExercise"
+//   _type: "ProgrammingExercise"`
 //   language?: { tag: "JS", testcase:  } | { tag: "C", testcase:  } | 
 // }
 
