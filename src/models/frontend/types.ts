@@ -134,6 +134,17 @@ interface AggregatedExerciseWithTeacherFields
 
 /* ----------------- */
 
+const enume = constants("ExerciseType", {
+  MULTIPLE_CHOICE_SINGLE_POSSIBLE : 0,
+  MULTIPLE_CHOICE_MULTIPLE_POSSIBLE : 1,
+  OPEN_ANSWER: 2,
+  COMPLETION: 3,
+  AGGREGATED: 4,
+  JS: 5,
+  ATTACHMENT: 6,
+  C: 7,
+}).untagged
+
 const ExerciseTypesMap = constants("exercises", [
   "MultipleChoiceRadioExercise",
   "MultipleChoiceRadioExerciseWithSolutions",
