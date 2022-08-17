@@ -3,18 +3,21 @@ import { getTranslatedString as _ } from "@/i18n";
 export interface BreadCrumb {
 	title: string;
 	routeName?: string;
-	routeParams?: string[];
+	routeParams?: Record<string, PropertyKey>;
 }
 
 const courseListBreadCrumb: BreadCrumb = {
 	title: _("breadcrumbs.course_list"),
 	routeName: "StudentCourseList",
+	routeParams: {
+		courseId: -1, // !
+	},
 };
 
 const courseDashBoardBreadCrumb: BreadCrumb = {
 	title: _("breadcrumbs.course_dashboard"),
 	routeName: "StudentCourseDashboard",
-	routeParams: ["courseId"],
+	// routeParams: ["courseId"],
 };
 
 export const courseListBreadCrumbs: BreadCrumb[] = [courseListBreadCrumb];
@@ -84,20 +87,28 @@ export const examAssessmentBreadCrumbs: BreadCrumb[] = [
 	},
 ];
 
-export const exerciseSolutionThreadBreadCrumbs: BreadCrumb[] = [
-	courseListBreadCrumb,
-	courseDashBoardBreadCrumb,
-	{
-		title: _("breadcrumbs.exercise_solution_thread"),
-		routeName: "ExerciseSolutionThread",
-	},
-];
-
 export const exerciseThreadsBreadCrumbs: BreadCrumb[] = [
 	courseListBreadCrumb,
 	courseDashBoardBreadCrumb,
 	{
-		title: _("breadcrumbs.exercise_solution_thread"),
+		title: _("breadcrumbs.exercise_solution_threads"),
 		routeName: "CourseDashBoardExerciseThreadList",
+	},
+];
+
+export const studentFavoritesBreadCrumbs: BreadCrumb[] = [
+	courseListBreadCrumb,
+	courseDashBoardBreadCrumb,
+	{
+		title: _("breadcrumbs.student_favorites"),
+		routeName: "StudentFavorites",
+	},
+];
+
+export const exerciseSolutionThreadBreadCrumbs: BreadCrumb[] = [
+	...exerciseThreadsBreadCrumbs,
+	{
+		title: _("breadcrumbs.exercise_solution_thread"),
+		routeName: "ExerciseSolutionThread",
 	},
 ];

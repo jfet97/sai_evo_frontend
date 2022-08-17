@@ -8,6 +8,7 @@ import StudentCourseDashboard from "../views/student/CourseDashboard/Main.vue";
 import CourseDashBoardExamList from "../views/student/CourseDashboard/ExamsList.vue";
 import CourseDashBoardPracticeSessionList from "../views/student/CourseDashboard/PracticeList.vue";
 import CourseDashBoardExerciseThreadList from "../views/student/CourseDashboard/ExerciseThreadList.vue";
+import FavoriteContentsList from "../views/student/CourseDashboard/FavoriteContentsList.vue";
 //import StudentCourseDashboard from "../views/student/CourseDashboard.vue";
 import CourseExercises from "../views/teacher/CourseExercises.vue";
 import CourseExams from "../views/teacher/CourseExams.vue";
@@ -43,6 +44,7 @@ import {
 	practiceParticipationBreadCrumbs,
 	practiceReviewBreadCrumbs,
 	practicesListBreadCrumbs,
+	studentFavoritesBreadCrumbs,
 	submissionReviewBreadCrumbs,
 } from "@/navigation/breadcrumbs";
 import { getCourse } from "@/api/courses";
@@ -264,6 +266,7 @@ const routes: Array<RouteRecordRaw> = [
 				meta: {
 					routeTitle: _("headings.course_title"),
 					breadcrumbs: courseDashBoardBreadCrumbs,
+					hideUserInfoFromNav: true,
 				},
 				redirect: { name: "CourseDashBoardPracticeSessionList" },
 				children: [
@@ -304,28 +307,27 @@ const routes: Array<RouteRecordRaw> = [
 							breadcrumbs: exerciseThreadsBreadCrumbs,
 						},
 					},
-					// TODO
 					{
 						path: "favorites",
 						name: "StudentFavorites",
-						component: CourseDashBoardExerciseThreadList,
+						component: FavoriteContentsList,
 						meta: {
-							routeTitle: _("headings.student_exercise_solution_threads"),
-							breadcrumbs: exerciseThreadsBreadCrumbs,
+							routeTitle: _("headings.student_favorites"),
+							breadcrumbs: studentFavoritesBreadCrumbs,
+						},
+					},
+					{
+						path: "threads/:exerciseId/:solutionId?",
+						name: "ExerciseSolutionThread",
+						component: ExerciseSolutionThread,
+						meta: {
+							routeTitle: _("headings.student_exercise_solution_thread"),
+							breadcrumbs: exerciseSolutionThreadBreadCrumbs,
 						},
 					},
 				],
 			},
 
-			{
-				path: "courses/:courseId/threads/:exerciseId/:solutionId?",
-				name: "ExerciseSolutionThread",
-				component: ExerciseSolutionThread,
-				meta: {
-					routeTitle: _("headings.student_exercise_solution_thread"),
-					breadcrumbs: exerciseSolutionThreadBreadCrumbs,
-				},
-			},
 			{
 				path: "courses/:courseId/exams/:examId",
 				component: ExamPreview,
@@ -405,6 +407,11 @@ const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes,
 });
+
+// router.beforeEach((to, from, next) => {
+// 	console.log({ to, from });
+// 	next();
+// });
 
 router.beforeEach((to, from, next) => {
 	const sharedState = (store.state as { shared: SharedState }).shared;

@@ -68,6 +68,7 @@ export const it = {
 		practice_summary: "Riepilogo esercitazione",
 		student_exercise_solution_thread: "Discussione esercizio",
 		student_exercise_solution_threads: "Esercizi popolari",
+		student_favorites: "Contenuti salvati",
 	},
 	event_participation_page: {
 		times_up: "Tempo scaduto",
@@ -278,7 +279,7 @@ export const it = {
 		my_practice_sessions: "Le mie esercitazioni",
 		popular_exercises: "Esercizi popolari",
 		leaderboard: "Classifica",
-		my_favorites: "Contenuti preferiti",
+		my_favorites: "Salvati",
 	},
 	exercise_solution: {
 		reveal_solutions_1: "Mostra",
@@ -681,6 +682,8 @@ export const it = {
 		select: "Seleziona",
 	},
 	student_course_dashboard: {
+		you_are_in_student_mode: "Stai visualizzando il corso in modalità studente",
+		no_exams: "Non hai ancora partecipato a nessun esame",
 		show_bookmarked: "Mostra solo preferite",
 		add_bookmark: "Aggiungi ai preferiti",
 		remove_bookmark: "Rimuovi dai preferiti",
@@ -913,7 +916,9 @@ export const it = {
 		submission_review: "Revisione " + ROUTE_TITLE_EVENT_NAME_TOKEN,
 		practice_review: "Riepilogo esercitazione",
 		exam_assessment: "Valutazione " + ROUTE_TITLE_EVENT_NAME_TOKEN,
-		exercise_solution_thread: "Esercizi popolari",
+		exercise_solution_thread: "Discussione esercizio",
+		exercise_solution_threads: "Esercizi popolari",
+		student_favorites: "Contenuti salvati",
 	},
 	course_list: {
 		filter_courses: "Cerca corsi",
