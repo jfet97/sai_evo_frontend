@@ -1,8 +1,5 @@
-FROM node:16.15.1-alpine
-
-RUN apk update && apk upgrade --no-cache
-RUN apk add git
-RUN apk add g++ make py3-pip
+ARG VARIANT=16-bullseye
+FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 
 RUN npm install -g @vue/cli
 RUN npm install -g @vue/cli-service
